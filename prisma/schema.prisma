@@ -1,0 +1,40 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Manga {
+  id          Int       @id @default(autoincrement())
+  title       String
+  slug        String
+  description String
+  genre       Json
+  thumbnail   String
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+  deleted_at  DateTime? // Nullable
+}
+
+model MangaChapter {
+  id         Int       @id @default(autoincrement())
+  manga_id   Int
+  label      String
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  deleted_at DateTime? // Nullable
+}
+
+model MangaImage {
+  id               Int       @id @default(autoincrement())
+  manga_id         Int
+  manga_chapter_id Int
+  image_path       String
+  is_cover         Boolean
+  created_at       DateTime  @default(now())
+  updated_at       DateTime  @updatedAt
+  deleted_at       DateTime? // Nullable
+}
